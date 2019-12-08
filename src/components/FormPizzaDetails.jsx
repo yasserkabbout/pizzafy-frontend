@@ -31,24 +31,23 @@ export class FormPizzaDetails extends Component {
           >
             <h4 className="text-center mt-3">Choose your Pizza</h4>
 
-            <Input type="select" onChange={handleChange("selectedPizza")}>
+            <Input name="selctedPizza" value = {values.selectedPizza} type="select" onChange={handleChange("selectedPizza")}>
               {values.pizzasOptions}
             </Input>
+            
+           
             <br />
-            <TextField
-              placeholder="Enter Your City"
-              label="City"
-              onChange={handleChange("city")}
-              defaultValue={values.city}
-              margin="normal"
-              fullWidth={true}
-            />
-            <br />
-            <TextField
-              placeholder="Enter Your Bio"
-              label="Bio"
-              onChange={handleChange("bio")}
-              defaultValue={values.bio}
+
+            <Input name="selectedPizzaSize" value={values.selectedPizzaSize} type="select" onChange={handleChange("selectedPizzaSize")}>
+              {values.pizzaSizeOptions}
+            </Input>
+            
+            <br/>
+             <TextField
+              placeholder="Enter the number of pizzas"
+              label="How many pizzas do you want?"
+              onChange={handleChange("numberOfPizzas")}
+              defaultValue={values.numberOfPizzas}
               margin="normal"
               fullWidth={true}
             />

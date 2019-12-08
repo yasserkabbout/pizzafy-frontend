@@ -4,6 +4,8 @@ import FormPizzaDetails from "./FormPizzaDetails";
 import Confirm from "./Confirm";
 import Success from "./Success";
 
+
+
 export class UserForm extends Component {
   constructor(props) {
     super(props);
@@ -19,9 +21,14 @@ export class UserForm extends Component {
       city: "",
       bio: "",
       pizzasArray: [],
+      pizzaSizesArray: [],
       pizzasOptions: [],
+      pizzaSizeOptions: [],
+      numberOfPizzas: 1,
       selectedPizza: null,
-      isLoadingPizzas: true
+      selectedPizzaSize: null,
+      isLoadingPizzas: true,
+      isLoadingPizzaSizes: true
     };
   }
 
@@ -52,6 +59,37 @@ export class UserForm extends Component {
 
         this.setState({ pizzasOptions: pizzasOptions, isLoadingPizzas: false });
       });
+
+    fetch("http://localhost:5000/api/v1/pizzasizes", {
+      method: "GET",
+      headers: {
+        Accept: "application/json"
+      }
+    })
+      .then(res => {
+        return res.json();
+      })
+      .then(data => {
+        this.setState({ pizzaSizesArray: data });
+      })
+      .then(() => {
+        let pizzaSizeOptions = [];
+
+        this.state.pizzaSizesArray.forEach(size => {
+          let sizeElement = (
+            <option value={size.id} key={size.id}>
+              {size.name}
+            </option>
+          );
+          pizzaSizeOptions.push(sizeElement);
+        });
+
+        this.setState({
+          pizzaSizeOptions: pizzaSizeOptions,
+          isLoadingPizzaSizes: false
+        });
+        
+      });
   }
 
   // Proceed to next step
@@ -68,6 +106,8 @@ export class UserForm extends Component {
         step: step + 1
       });
     } else alert("Invalid Inputs!");
+
+    
   };
 
   // Go back to prev step
@@ -86,11 +126,12 @@ export class UserForm extends Component {
   // Handle fields change
   handleChange = input => e => {
     this.setState({ [input]: e.target.value });
-    console.log(this.state.selectedPizza);
+    
   };
 
   render() {
-    if (this.state.isLoadingPizzas) return null;
+    if (this.state.isLoadingPizzas && this.state.isLoadingPizzaSizes)
+      return null;
     const { step } = this.state;
     const {
       firstName,
@@ -102,7 +143,10 @@ export class UserForm extends Component {
       city,
       bio,
       pizzasOptions,
-      selectedPizza
+      selectedPizza,
+      numberOfPizzas,
+      selectedPizzaSize,
+      pizzaSizeOptions
     } = this.state;
     const values = {
       firstName,
@@ -114,7 +158,10 @@ export class UserForm extends Component {
       city,
       bio,
       pizzasOptions,
-      selectedPizza
+      selectedPizza,
+      numberOfPizzas,
+      selectedPizzaSize,
+      pizzaSizeOptions
     };
 
     switch (step) {

@@ -19,15 +19,14 @@ export class Success extends Component {
     return (
       <MuiThemeProvider > 
         <React.Fragment>
-        <Dialog 
-            open="true"
-            fullWidth="true"
-            maxWidth='sm'
+        <div
+            className="container bg-white rounded border border-custom h-50 mt-3"
+            style={{ maxWidth: "30.9em" }}
           >
-            <AppBar title="Success" />
-            <h1>Thank You For Your Submission</h1>
-            <p>You will get an email with further instructions</p>
-          </Dialog>
+            <h4 className="text-center mt-3">Your order has been placed at the restaurant</h4>
+            
+            <p className="text-center">You may now track your order</p>
+         </div>
         </React.Fragment>
       </MuiThemeProvider>
     );
