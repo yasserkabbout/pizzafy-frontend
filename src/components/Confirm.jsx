@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import Dialog from "@material-ui/core/Dialog";
-import AppBar from "@material-ui/core/AppBar";
 import { ThemeProvider as MuiThemeProvider } from "@material-ui/core/styles";
 import { List, ListItem, ListItemText } from "@material-ui/core/";
 import Button from "@material-ui/core/Button";
@@ -17,10 +15,69 @@ export class Confirm extends Component {
       selectedPizza: this.props.values.selectedPizza,
       selectedPizzaSize: this.props.values.selectedPizzaSize,
       numberOfPizzas: this.props.values.numberOfPizzas,
-      base_price: null,
-      total_price: null
+      pizzasArray: this.props.values.pizzasArray,
+      pizzaSizesArray: this.props.values.pizzaSizesArray,
+      pizzaAsName: null,
+      sizeAsName: null,
+      sizeCoefficient: null,
+      basePrice: null,
+      totalPrice: null
     };
+
+    this.prepareBasePrice();
+    this.preparePizzaAsName();
+    this.prepareSizeAsName();
+    this.prepareTotalPrice();
   }
+
+  prepareBasePrice = () => {
+    let id = parseFloat(this.state.selectedPizza);
+
+    let basePrice = null;
+
+    this.state.pizzasArray.map(pizza => {
+      if (pizza.id === id) {
+        basePrice = pizza.base_price;
+        this.state.basePrice = basePrice;
+      }
+    });
+  };
+
+  preparePizzaAsName = () => {
+    let id = parseFloat(this.state.selectedPizza);
+
+    let pizzaAsName = null;
+
+    this.state.pizzasArray.map(pizza => {
+      if (pizza.id === id) {
+        pizzaAsName = pizza.type;
+        this.state.pizzaAsName = pizzaAsName;
+      }
+    });
+  };
+
+  prepareSizeAsName = () => {
+    let id = parseFloat(this.state.selectedPizzaSize);
+
+    let sizeAsName = null;
+    let sizeCoefficient = null;
+
+    this.state.pizzaSizesArray.map(size => {
+      if (size.id === id) {
+        sizeAsName = size.name;
+        sizeCoefficient = size.coefficient;
+        this.state.sizeAsName = sizeAsName;
+        this.state.sizeCoefficient = sizeCoefficient;
+      }
+    });
+  };
+
+  prepareTotalPrice = () => {
+    this.state.totalPrice =
+      parseFloat(this.state.basePrice) *
+      parseFloat(this.state.sizeCoefficient) *
+      parseFloat(this.state.numberOfPizzas);
+  };
 
   continue = e => {
     e.preventDefault();
@@ -73,13 +130,23 @@ export class Confirm extends Component {
               <ListItem>
                 <ListItemText
                   primary="Your Pizza"
-                  secondary={this.state.selectedPizza}
+                  secondary={
+                    this.state.pizzaAsName +
+                    " (" +
+                    this.state.basePrice +
+                    " euros)"
+                  }
                 />
               </ListItem>
               <ListItem>
                 <ListItemText
                   primary="Pizza Size"
-                  secondary={this.state.selectedPizzaSize}
+                  secondary={
+                    this.state.sizeAsName +
+                    "( * " +
+                    this.state.sizeCoefficient +
+                    ")"
+                  }
                 />
               </ListItem>
               <ListItem>
@@ -88,10 +155,13 @@ export class Confirm extends Component {
                   secondary={this.state.numberOfPizzas}
                 />
               </ListItem>
+
               <ListItem>
                 <ListItemText
                   primary="Total Price"
-                  secondary={this.state.total_price}
+                  secondary={
+                    "Total Price = " + this.state.totalPrice + " euros"
+                  }
                 />
               </ListItem>
             </List>
@@ -106,7 +176,7 @@ export class Confirm extends Component {
                 variant="contained"
                 onClick={this.continue}
               >
-                Confirm & Continue
+                Confirm & Pay
               </Button>
             </div>
           </div>

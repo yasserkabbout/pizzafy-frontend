@@ -17,9 +17,6 @@ export class UserForm extends Component {
       email: "",
       phoneNumber: "",
       address: "",
-      occupation: "",
-      city: "",
-      bio: "",
       pizzasArray: [],
       pizzaSizesArray: [],
       pizzasOptions: [],
@@ -28,7 +25,7 @@ export class UserForm extends Component {
       selectedPizza: null,
       selectedPizzaSize: null,
       isLoadingPizzas: true,
-      isLoadingPizzaSizes: true
+      isLoadingPizzaSizes: true,
     };
   }
 
@@ -139,9 +136,8 @@ export class UserForm extends Component {
       email,
       phoneNumber,
       address,
-      occupation,
-      city,
-      bio,
+      pizzasArray,
+      pizzaSizesArray,
       pizzasOptions,
       selectedPizza,
       numberOfPizzas,
@@ -154,9 +150,8 @@ export class UserForm extends Component {
       email,
       phoneNumber,
       address,
-      occupation,
-      city,
-      bio,
+      pizzasArray,
+      pizzaSizesArray,
       pizzasOptions,
       selectedPizza,
       numberOfPizzas,
