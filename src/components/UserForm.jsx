@@ -5,36 +5,54 @@ import Confirm from "./Confirm";
 import Success from "./Success";
 
 export class UserForm extends Component {
-  constructor(props){
-    super(props)
-  
-  this.state = {
-    step: 1,
-    firstName: "",
-    lastName: "",
-    email: "",
-    phoneNumber: "",
-    address: "",
-    occupation: "",
-    city: "",
-    bio: ""
-  };
+  constructor(props) {
+    super(props);
 
-}
+    this.state = {
+      step: 1,
+      firstName: "",
+      lastName: "",
+      email: "",
+      phoneNumber: "",
+      address: "",
+      occupation: "",
+      city: "",
+      bio: "",
+      pizzasArray: [],
+      pizzasOptions: [],
+      selectedPizza: null,
+      isLoadingPizzas: true
+    };
+  }
 
-componentDidMount(){
+  componentDidMount() {
+    fetch("http://localhost:5000/api/v1/pizzas", {
+      method: "GET",
+      headers: {
+        Accept: "application/json"
+      }
+    })
+      .then(res => {
+        return res.json();
+      })
+      .then(data => {
+        this.setState({ pizzasArray: data });
+      })
+      .then(() => {
+        let pizzasOptions = [];
 
-  fetch("http://localhost:5000/api/v1/users", {
-       method: "GET",
-       headers: {
-         Accept: "application/json"
-       }
-     }).then(res => {
-       return res.json()})
-       .then(data => {
-         this.setState({usersArray: data, isLoadingUsers: false});
-       });
-}
+        this.state.pizzasArray.forEach(pizza => {
+          let pizzaElement = (
+            <option value={pizza.id} key={pizza.id}>
+              {pizza.type}
+            </option>
+          );
+          pizzasOptions.push(pizzaElement);
+        });
+
+        this.setState({ pizzasOptions: pizzasOptions, isLoadingPizzas: false });
+      });
+  }
 
   // Proceed to next step
   nextStep = () => {
@@ -68,9 +86,11 @@ componentDidMount(){
   // Handle fields change
   handleChange = input => e => {
     this.setState({ [input]: e.target.value });
+    console.log(this.state.selectedPizza);
   };
 
   render() {
+    if (this.state.isLoadingPizzas) return null;
     const { step } = this.state;
     const {
       firstName,
@@ -80,7 +100,9 @@ componentDidMount(){
       address,
       occupation,
       city,
-      bio
+      bio,
+      pizzasOptions,
+      selectedPizza
     } = this.state;
     const values = {
       firstName,
@@ -90,7 +112,9 @@ componentDidMount(){
       address,
       occupation,
       city,
-      bio
+      bio,
+      pizzasOptions,
+      selectedPizza
     };
 
     switch (step) {

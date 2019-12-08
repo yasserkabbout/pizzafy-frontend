@@ -1,38 +1,17 @@
 import React, { Component } from "react";
 import Dialog from "@material-ui/core/Dialog";
 import AppBar from "@material-ui/core/AppBar";
-import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
+import { ThemeProvider as MuiThemeProvider } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 
 export class FormUserDetails extends Component {
-  
-
-  // componentDidMount() {
-
-  //   fetch("http://localhost:5000/api/v1/users", {
-  //     method: "GET",
-  //     headers: {
-  //       Accept: "application/json"
-  //     }
-  //   }).then(res => {
-  //     return res.json()})
-  //     .then(data => {
-  //       this.setState({usersArray: data, isLoadingUsers: false});
-  //     });
-
-    
-  // }
-
-
   continue = e => {
     e.preventDefault();
     this.props.nextStep();
   };
 
   render() {
-
-  
     const { values, handleChange } = this.props;
     return (
       <MuiThemeProvider>
@@ -71,7 +50,7 @@ export class FormUserDetails extends Component {
             />
             <br />
             <TextField
-            name="phoneNumber"
+              name="phoneNumber"
               placeholder="Enter Your Phone Number"
               label="Phone number"
               onChange={handleChange("phoneNumber")}
@@ -81,7 +60,7 @@ export class FormUserDetails extends Component {
             />
             <br />
             <TextField
-            name="address"
+              name="address"
               placeholder="Enter Your Address"
               label="Address"
               onChange={handleChange("address")}
