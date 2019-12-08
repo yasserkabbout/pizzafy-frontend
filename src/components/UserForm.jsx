@@ -4,8 +4,6 @@ import FormPizzaDetails from "./FormPizzaDetails";
 import Confirm from "./Confirm";
 import Success from "./Success";
 
-
-
 export class UserForm extends Component {
   constructor(props) {
     super(props);
@@ -25,7 +23,7 @@ export class UserForm extends Component {
       selectedPizza: null,
       selectedPizzaSize: null,
       isLoadingPizzas: true,
-      isLoadingPizzaSizes: true,
+      isLoadingPizzaSizes: true
     };
   }
 
@@ -85,7 +83,6 @@ export class UserForm extends Component {
           pizzaSizeOptions: pizzaSizeOptions,
           isLoadingPizzaSizes: false
         });
-        
       });
   }
 
@@ -103,8 +100,6 @@ export class UserForm extends Component {
         step: step + 1
       });
     } else alert("Invalid Inputs!");
-
-    
   };
 
   // Go back to prev step
@@ -123,7 +118,6 @@ export class UserForm extends Component {
   // Handle fields change
   handleChange = input => e => {
     this.setState({ [input]: e.target.value });
-    
   };
 
   render() {
