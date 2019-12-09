@@ -29,6 +29,9 @@ export class UserForm extends Component {
 
   componentDidMount() {
 
+    //TODO add api_client as a seperate component/file
+
+    
     //Fetch all the Pizzas from the database
     fetch("http://localhost:5000/api/v1/pizzas", {
       method: "GET",
