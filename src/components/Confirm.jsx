@@ -80,6 +80,43 @@ export class Confirm extends Component {
   };
 
   continue = e => {
+
+    let userData = {
+      first_name: this.state.firstName,
+      last_name: this.state.lastName,
+      email: this.state.email,
+      phone_number: this.state.phoneNumber,
+      address: this.state.address
+
+    }
+
+    let orderItem = {
+      pizza_id: this.state.selectedPizza,
+      size: this.state.selectedPizzaSize,
+      quantity: this.state.numberOfPizzas,
+      price: this.state.totalPrice
+    }
+  
+    let orderData = {
+      userData: userData,
+      orderItem: orderItem,
+      total_price: this.state.totalPrice,
+      status: "Submitted"
+    }
+
+    fetch("http://localhost:5000/api/v1/orders", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(orderData)
+
+    })
+    .then(response => {
+
+        return response.json();
+    });
+
     e.preventDefault();
     // PROCESS FORM //
     this.props.nextStep();

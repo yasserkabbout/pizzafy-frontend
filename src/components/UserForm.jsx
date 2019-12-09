@@ -28,6 +28,8 @@ export class UserForm extends Component {
   }
 
   componentDidMount() {
+
+    //Fetch all the Pizzas from the database
     fetch("http://localhost:5000/api/v1/pizzas", {
       method: "GET",
       headers: {
@@ -55,6 +57,7 @@ export class UserForm extends Component {
         this.setState({ pizzasOptions: pizzasOptions, isLoadingPizzas: false });
       });
 
+      //Fetch all the pizza sizes from the database
     fetch("http://localhost:5000/api/v1/pizzasizes", {
       method: "GET",
       headers: {
